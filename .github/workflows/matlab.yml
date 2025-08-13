@@ -17,16 +17,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install additional MathWorks products
-        run: |
-          wget https://www.mathworks.com/mpm/glnxa64/mpm
-          chmod +x mpm
-          sudo ./mpm install --inputfile=mpm_input_r2025a.txt --destination=/opt/matlab/R2025a
-
-      - name: Install matlab-batch to support token-based licensing
+      - name: Get matlab-batch (for token-based licensing)
         run: |
           wget https://ssd.mathworks.com/supportfiles/ci/matlab-batch/v1/glnxa64/matlab-batch
           chmod +x matlab-batch
+
+      - name: Get MPM
+        run: |
+          wget https://www.mathworks.com/mpm/glnxa64/mpm
+          chmod +x mpm
+
+      - name: Install products using an input file
+        run: |
+          sudo ./mpm install --inputfile=mpm_input_r2025a.txt
 
       - name: Run signal processing command
         uses: matlab-actions/run-command@v2
