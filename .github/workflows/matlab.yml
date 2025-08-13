@@ -19,6 +19,8 @@ jobs:
 
       - name: Install additional MathWorks products
         run: |
+          wget https://www.mathworks.com/mpm/glnxa64/mpm
+          chmod +x mpm
           mpm install --inputfile=mpm_input_r2025a.txt
 
       - name: Run signal processing command
