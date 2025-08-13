@@ -1,0 +1,30 @@
+name: MATLAB
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    container:
+      image: mathworks/matlab:R2025a
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install additional MathWorks products
+        run: |
+          mpm install --inputfile=mpm_input_r2025a.txt
+
+      - name: Run signal processing command
+        uses: matlab-actions/run-command@v2
+        with:
+          command: |
+            X = [1 2 3];
+            Y = [0 0 1 2 3];
+            D = finddelay(X,Y)
