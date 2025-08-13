@@ -19,17 +19,19 @@ jobs:
 
       - name: Get matlab-batch (for token-based licensing)
         run: |
-          wget https://ssd.mathworks.com/supportfiles/ci/matlab-batch/v1/glnxa64/matlab-batch
+          wget -q https://ssd.mathworks.com/supportfiles/ci/matlab-batch/v1/glnxa64/matlab-batch
           chmod +x matlab-batch
+          sudo mv matlab-batch /usr/local/bin
 
       - name: Get MPM
         run: |
-          wget https://www.mathworks.com/mpm/glnxa64/mpm
+          wget -q https://www.mathworks.com/mpm/glnxa64/mpm
           chmod +x mpm
+          sudo mv mpm /usr/local/bin
 
       - name: Install products using an input file
         run: |
-          sudo ./mpm install --inputfile=mpm_input_r2025a.txt
+          sudo mpm install --inputfile=mpm_input_r2025a.txt
 
       - name: Run signal processing command
         uses: matlab-actions/run-command@v2
